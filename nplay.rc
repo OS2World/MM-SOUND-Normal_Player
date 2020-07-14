@@ -1,0 +1,73 @@
+ICON 50 "nplay.ICO"
+ICON 100 "play.ico"
+ICON 200 "stop.ico"
+ICON 900 "ffwd.ico"
+ICON 1000 "rwd.ico"
+ICON 400 "open.ico"
+ICON 1100 "close.ico"
+
+MENU 50
+BEGIN
+   SUBMENU "~File", 2100
+   BEGIN
+      MENUITEM "~Open...\tCtrl+O", 2101
+      MENUITEM "~Close\tC", 1100
+   END
+   SUBMENU "~Control", 2200
+   BEGIN
+      MENUITEM "~Play\tP", 100
+      MENUITEM "~Stop\tS", 200
+      MENUITEM "~Fast Foward\tF", 900
+      MENUITEM "~Rewind\tR", 1000
+   END
+   SUBMENU "~Options", 2300
+   BEGIN
+      MENUITEM "Shink to ~Fit\tCtrl+F", 2301
+      MENUITEM "~Display Options\tCtrl+D", 2302
+   END
+END
+ACCELTABLE 50
+BEGIN
+   "P", 100
+   "S", 200
+   "F", 900
+   "R", 1000
+   "C", 1100
+   "O", 2101, CONTROL
+   "F", 2301, CONTROL
+   "D", 2302, CONTROL
+END
+
+STRINGTABLE
+BEGIN
+   1000 "~Rwd"
+   100 "~Play"
+   200 "~Stop"
+   900 "~FFwd"
+   400 "~Open"
+   1100 "~Close"
+END
+
+#ifndef OS2_INCLUDED
+   #include <os2.h>
+#endif
+#include "display.h"
+
+DLGTEMPLATE DisplayDlg LOADONCALL MOVEABLE DISCARDABLE
+BEGIN
+    DIALOG  "Display Options", DisplayDlg, 93, 47, 99, 91, WS_VISIBLE,
+            FCF_SYSMENU | FCF_TITLEBAR
+    BEGIN
+        LTEXT           "~Spacing", SpacingText, 37, 74, 53, 8, DT_MNEMONIC
+        SPINBUTTON      SpacingSpin, 5, 74, 27, 12, SPBS_NUMERICONLY |
+                        SPBS_MASTER | SPBS_JUSTRIGHT
+        GROUPBOX        "Control Buttons", ControlButtonGroup, 2, 26, 91, 43
+        AUTORADIOBUTTON "~Text Only", TextRadio, 6, 50, 78, 10, WS_TABSTOP
+        AUTORADIOBUTTON "~Icons Only", IconRadio, 6, 40, 78, 10, WS_TABSTOP
+        AUTORADIOBUTTON "Text ~and Icons", TextIconRadio, 6, 30, 78, 10,
+                        WS_TABSTOP
+        DEFPUSHBUTTON   "~Ok", DID_OK, 3, 5, 40, 14, WS_GROUP
+        PUSHBUTTON      "~Cancel", DID_CANCEL, 48, 5, 40, 14
+    END
+END
+
